@@ -1,0 +1,65 @@
+<ion-view view-title="Dictionary">
+  <ion-content>
+    <div class="list">
+
+  <div class="item item-input-inset">
+    <div class="item-input-wrapper">
+      <input type="text" placeholder="Enter a word here..." ng-model="wordToSearch">
+      <i class="icon ion-close-circled" ng-click="wordToSearch=null"></i>
+    </div>
+    <button class="button button-small" ng-click="searchWord(wordToSearch)">
+      Search
+    </button>
+  </div>
+<div ng-show="errorInSearch">The word does not exist</div>
+<div ng-show="errorOccurred">An error occurred. Please try again later.</div>
+
+
+<div ng-show="(nounArray.length)>0">
+  <div class="item item-divider">
+    As a Noun
+  </div>
+  <div ng-repeat="x in nounArray">
+    {{x}}
+  </div>  
+</div>
+
+<div ng-show="(definitionArray.length)>0">
+  <div class="item item-divider">
+    As a Verb
+  </div>
+  <div ng-repeat="x in definitionArray">
+    {{x}}
+  </div>  
+</div>
+
+<div ng-show="(adjectiveArray.length)>0">
+  <div class="item item-divider">
+    As an Adjective
+  </div>
+  <div ng-repeat="x in adjectiveArray">
+    {{x}}
+  </div>  
+</div>
+
+<div ng-show="(synonymArray.length)>0">
+  <div class="item item-divider">
+    Synonyms
+  </div>
+  <div ng-repeat="x in synonymArray track by $index">
+    {{x}}
+  </div>  
+</div>
+
+<div ng-show="(antonymArray.length)>0">
+  <div class="item item-divider">
+    Antonyms
+  </div>
+  <div ng-repeat="x in antonymArray track by $index">
+    {{x}}
+  </div>  
+</div>
+
+</div>
+  </ion-content>
+</ion-view>
