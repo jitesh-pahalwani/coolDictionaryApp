@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $timeout,$rootScope) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
@@ -9,50 +9,64 @@ angular.module('starter.controllers', [])
     //$scope.$on('$ionicView.enter', function(e) {
     //});
 
-    // Form data for the login modal
-    $scope.loginData = {};
-
-    // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-        scope: $scope
-    }).then(function(modal) {
-        $scope.modal = modal;
+/*Capturing emitted data from Child controller and broadcasting the data to another child controller*/
+$scope.$on('historyItemClick', function(e,data) {
+    $rootScope.$broadcast("sendWordToSearch", data);
     });
 
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function() {
-        $scope.modal.hide();
-    };
-
-    // Open the login modal
-    $scope.login = function() {
-        $scope.modal.show();
-    };
-
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function() {
-        console.log('Doing login', $scope.loginData);
-
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
-        $timeout(function() {
-            $scope.closeLogin();
-        }, 1000);
-    };
 })
 
 .controller('themesCtrl', function($scope) {
 })
 
-.controller('searchCtrl', function($scope, $http) {
+.controller('historyCtrl', function($scope,$state) {
+    $scope.showSpinner=false;
+    $scope.recentSearchesFromDbToBind=[];
+
+    /*Event to fetch recently searched words from Database every time this view is loaded*/
+    $scope.$on('$ionicView.enter', function(e) {
+        $scope.fetchFromDb();
+    });
+
+    /*Function to fetch all recent searches from Database*/
+    $scope.fetchFromDb = function(){
+        var db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
+        $scope.showSpinner=true;
+        $scope.recentSearchesFromDbToBind.length=0;
+        db.executeSql("SELECT * FROM recentSearches", [], function (resultSet) {
+    for(i=0;i<resultSet.rows.length;i++){    
+    $scope.recentSearchesFromDbToBind.push(resultSet.rows.item(i).word);
+    }
+    $scope.recentSearchesFromDbToBind.reverse();
+    $scope.showSpinner=false;
+    });
+    }
+
+    /*Function to invoke search of a word from recent history*/
+    $scope.searchFromHistory= function(wordFromHistory){
+        $state.go('app.search');
+        $scope.$emit("historyItemClick", wordFromHistory);
+    }
+})
+
+.controller('searchCtrl', function($scope, $http,$rootScope,$ionicNavBarDelegate,$ionicSideMenuDelegate) {
+    $ionicNavBarDelegate.showBackButton(false);
     $scope.definitionArray = [];
     $scope.adjectiveArray = [];
     $scope.nounArray = [];
     $scope.synonymArray = [];
     $scope.antonymArray = [];
+    $scope.showSpinner=false;
+
+    /*Capturing the broadcasted data from parent controller*/
+    $rootScope.$on('sendWordToSearch', function(e,data) {
+        document.getElementById("searchInputBox").value = data;
+    $scope.searchWord(data);
+    });
 
     /*Function to search the word entered by the user*/
     $scope.searchWord = function(x) {
+        $scope.showSpinner=true;
         $scope.definitionArray = [];
         $scope.adjectiveArray = [];
         $scope.nounArray = [];
@@ -60,11 +74,12 @@ angular.module('starter.controllers', [])
         $scope.antonymArray = [];
         $scope.errorInSearch = false;
         $scope.errorOccurred = false;
+        $scope.noString=false;
 
-
+    if(x){
         $http({
             method: 'GET',
-            url: 'https://en.wiktionary.org/w/api.php?format=json&action=query&titles=' + x + '&rvprop=content&prop=revisions&redirects=1'
+            url: 'https://en.wiktionary.org/w/api.php?format=json&action=query&titles=' + x.toLowerCase() + '&rvprop=content&prop=revisions&redirects=1'
         }).then(function successCallback(response) {
             var keyVal = Object.keys(response.data.query.pages);
             if (keyVal == -1) {
@@ -72,12 +87,30 @@ angular.module('starter.controllers', [])
             }
             var longString = response.data.query.pages[keyVal].revisions[0]['*'];
             $scope.extractHeadings(longString);
-
+            $scope.dbtransac(x);
         }, function errorCallback(response) {
             console.log("error occurred");
             $scope.errorOccurred = true;
             console.log(response);
+            $scope.showSpinner=false;
         });
+    }
+    else{
+            $scope.noString=true;
+            $scope.showSpinner=false;
+        }    
+    }
+
+    /*Function to insert the searched word in Database*/
+    $scope.dbtransac = function(wordToInsertInDb){
+        var db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
+        db.transaction(function(tx) {
+    tx.executeSql('INSERT INTO recentSearches VALUES (?)', [wordToInsertInDb]);
+  }, function(error) {
+    //alert('Database Connection ERROR: ' + error.message);
+  }, function() {
+    //alert('Database Connection Successful');
+        })
     }
 
     /*Function to extract Verb, Adjective, Noun, Synonyms and Antonyms sections from the long string in the http response*/
@@ -161,6 +194,7 @@ angular.module('starter.controllers', [])
                 antonymSectionTemp = antonymSectionTemp.replace("{{l|en|", "");
             }
         }
+        $scope.showSpinner=false;
     }
 
 });

@@ -1,0 +1,20 @@
+/* Empty. Add your own CSS if you like */
+#spinnerId{
+	position: absolute;
+	top: 50%;
+	left:40%;
+}
+.spinner svg {
+  width: 75px;
+  height: 75px;
+}
+#searchBarWrapper{
+    width: 80%
+}
+#searchInputBox{
+    width: 90%;
+}
+#crossIcon{
+        padding: 5px;
+    font-size: 20px;
+}

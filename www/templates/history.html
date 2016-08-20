@@ -1,26 +1,14 @@
-<ion-view view-title="Dictionary">
+<ion-view cache-view="false" view-title="Dictionary">
   <ion-content>
+  <ion-spinner ng-show="showSpinner" id="spinnerId" icon="ripple"></ion-spinner>
 <div class="list">
-
   <div class="item item-divider">
     Your recent searches:
   </div>
 
-  <a class="item" href="#">
-    Perplex
-  </a>
-  <a class="item" href="#">
-    Conducive
-  </a>
-  <a class="item" href="#">
-    Epiphany
-  </a>
-  <a class="item" href="#">
-    Tepid
-  </a>
-  <a class="item" href="#">
-    Ambidextrous
-  </a>
+  <a ng-repeat="x in recentSearchesFromDbToBind" class="item" ng-click="searchFromHistory(x)" href="#">
+    {{x}}
+  </a>  
 
 </div>
   </ion-content>
