@@ -1,16 +1,19 @@
-<ion-view view-title="Playlist">
+<ion-view ng-style="returnStyleForBackgroundImage()" view-title="Dark Knight Dictionary">
   <ion-content>
   <div class="list">
 
-  <div class="item item-divider">
+  <div ng-style="styleForItemDivider()" class="item item-divider">
     Themes
   </div>
 
   <ion-list>
-  <ion-radio ng-model="styleVar" ng-value="'style'">Dark</ion-radio>
-  <ion-radio ng-model="styleVar" ng-value="'style2'">Light</ion-radio>
+  <ion-radio ng-style="styleForThemeItem()" ng-model="$parent.themeSelected" checked value="Batman" ng-click="themeClick()">Batman</ion-radio>
+  <ion-radio ng-style="styleForThemeItem()" ng-model="$parent.themeSelected" value="Joker" ng-click="themeClick()">Joker</ion-radio>
 </ion-list>
 
 </div>
   </ion-content>
+<div ng-style="styleForItemDivider()" class="bar bar-footer bar-balanced">
+  <div  class="title">Current Theme: {{themeVar}}</div>
+</div>
 </ion-view>

@@ -13,20 +13,21 @@
   </ion-side-menu-content>
 
   <ion-side-menu side="left">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Menu</h1>
+    <ion-header-bar ng-style="styleForMenuHeader()" class="bar-stable">
+      <h1 ng-style="styleForMenuItemDivider()" class="title">Menu</h1>
     </ion-header-bar>
-    <ion-content>
+    <ion-content ng-style="styleForMenuInputInset()">
       <ion-list>
-        <ion-item menu-close href="#/app/search">
-          Word Search
-        </ion-item>
-        <ion-item menu-close href="#/app/browse">
+         <a menu-close ng-style="styleForMenuItem()" href="#/app/search" class="item"> Word Search</a>
+         <a menu-close ng-style="styleForMenuItem()" href="#/app/browse" class="item"> History</a>
+         <a menu-close ng-style="styleForMenuItem()" href="#/app/themes" class="item"> Themes</a>
+         <a menu-close ng-style="styleForMenuItem()" href="#/app/about" class="item"> About</a>
+        <!--ion-item menu-close href="#/app/browse">
           History
         </ion-item>
         <ion-item menu-close href="#/app/themes">
           Themes
-        </ion-item>
+        </ion-item-->
       </ion-list>
     </ion-content>
   </ion-side-menu>

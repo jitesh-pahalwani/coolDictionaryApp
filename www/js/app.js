@@ -24,15 +24,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
       db.transaction(function(tx) {
     tx.executeSql('CREATE TABLE IF NOT EXISTS recentSearches (word text primary key)');
-    //tx.executeSql('INSERT INTO recentSearches VALUES (?)', ["perplex"]);
-    //tx.executeSql('INSERT INTO recentSearches VALUES (?)', ["conducive"]);
   }, function(error) {
     alert('Database Creation ERROR: ' + error.message);
   }, function() {
     //alert('Populated database OK');
-    //db.executeSql("SELECT * FROM recentSearches", [], function (resultSet) {
-    //alert(resultSet.rows.item(1).word);
-//});
   });
     
   });
@@ -74,6 +69,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         'menuContent': {
           templateUrl: 'templates/themes.html',
           controller: 'themesCtrl'
+        }
+      }
+    })
+    .state('app.about', {
+      url: '/about',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/about.html',
+          controller: 'aboutCtrl'
         }
       }
     })

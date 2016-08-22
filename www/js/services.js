@@ -1,25 +1,17 @@
 angular.module('starter').service('dictionaryService',['$q',function($q){
-                    var historyArrayToShare=[];
-                    //var db = window.sqlitePlugin.openDatabase({name: 'demo.db', location: 'default'});
-                    var setHistoryArray = function(x){
-                    historyArrayToShare=x;
-                    console.log("historyArrayToShare",historyArrayToShare);
+                    var dataToShare;
+                    var setTheme = function(x){
+                    dataToShare=x;
+                    console.log("dataToShare",dataToShare);
                     };
                     
-                    var getHistoryArray = function(){
-                        /*db.executeSql("SELECT * FROM recentSearches", [], function (resultSet) {
-        alert("inside executeSql");
-    for(i=0;i<resultSet.rows.length;i++){    
-    alert(resultSet.rows.item(i).word);
-    historyArrayToShare.push(resultSet.rows.item(i).word);
-    }
-    });*/
-                    return historyArrayToShare;
+                    var getTheme = function(){
+                    return dataToShare;
                     };
                     
                     return {
-                    setHistoryArray: setHistoryArray,
-                    getHistoryArray: getHistoryArray
+                    setTheme: setTheme,
+                    getTheme: getTheme
                     };
                     
                     

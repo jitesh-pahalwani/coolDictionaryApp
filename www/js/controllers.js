@@ -1,25 +1,291 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout,$rootScope) {
+.controller('AppCtrl',['$scope', '$ionicModal','$rootScope','dictionaryService' ,function($scope, $ionicModal,$rootScope,dictionaryService) {
 
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
+    $scope.$on('$ionicView.enter', function(e) {
+            if(dictionaryService.getTheme() == undefined){
+          dictionaryService.setTheme("Batman");
+    }
+    $scope.themeVar = dictionaryService.getTheme();
+    });
 
 /*Capturing emitted data from Child controller and broadcasting the data to another child controller*/
 $scope.$on('historyItemClick', function(e,data) {
     $rootScope.$broadcast("sendWordToSearch", data);
     });
 
-})
+    $rootScope.returnStyleForBackgroundImage = function(){
+  $scope.themeVar = dictionaryService.getTheme();
 
-.controller('themesCtrl', function($scope) {
-})
+if($scope.themeVar == "Joker"){
+return {
+"background-image": "url(images/joker.jpg)",
+"background-size":"contain"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+"background-image": "url(images/batman.jpg)",
+"background-size":"contain"
+}
+}
+}
 
-.controller('historyCtrl', function($scope,$state) {
+$rootScope.styleForSubItem = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+    "background-color": "#1D0925",
+    "opacity": "0.8",
+    "color": "#D7F3D3",
+    "font-weight": "bold"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+    "background-color": "black",
+    "opacity": "0.8",
+    "color": "white",
+    "font-weight": "bold"
+}
+}
+}
+
+$rootScope.styleForThemeItem = function(){
+  $scope.themeVar = dictionaryService.getTheme();
+
+if($scope.themeVar == "Joker"){
+return {
+    "opacity": "0.8",
+    "color": "#87D37C",
+    "font-weight": "bold"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+    "opacity": "0.8",
+    "color": "black",
+    "font-weight": "bold"
+}
+}
+}
+
+$rootScope.styleForItemDivider = function(){
+  $scope.themeVar = dictionaryService.getTheme();
+
+if($scope.themeVar == "Joker"){
+return {
+"background-color": "#9B59B6",
+    "color": "#D7F3D3",
+    "font-weight": "bold"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+"background-color": "#526374",
+    "color": "white",
+    "font-weight": "bold"
+}
+}
+}
+
+$rootScope.styleForMenuItemDivider = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+    "color": "#D7F3D3",
+    "font-weight": "bold"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+    "color": "white",
+    "font-weight": "bold"
+}
+}
+}
+
+$rootScope.styleForErrorDiv = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+"background-color": "#9B59B6",
+    "color": "#D7F3D3",
+    "font-weight": "bold",
+    "padding": "5px",
+    "text-align": "center"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+"background-color": "#526374",
+    "color": "white",
+    "font-weight": "bold",
+    "padding": "5px",
+    "text-align": "center"
+}
+}
+}
+
+$rootScope.styleForInputInset = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+"background-color": "#9B59B6"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+"background-color": "#526374",
+}
+}
+}
+
+$rootScope.styleForMenuInputInset = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+"background-color": "#1D0925"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+"background-color": "#526374",
+}
+}
+}
+
+$rootScope.styleForMenuHeader = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+"background-color": "#1D0925"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+"background-color": "#526374",
+}
+}
+}
+
+$rootScope.styleForHeaderBar = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+"background-color": "purple"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+"background-color": "#091826",
+}
+}
+}
+
+$rootScope.styleForCrossIcon = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+"color": "#1D0925"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+"color": "#091826",
+}
+}
+}
+
+$rootScope.styleForButton = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+    "font-weight": "bold",
+    "color": "#1D0925"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+    "font-weight": "bold",
+    "color": "#091826"
+}
+}
+}
+
+$rootScope.styleForMenuItem = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+"background-color": "purple",
+    "color": "#D7F3D3"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+"background-color": "#22313F",
+    "color": "white"
+}
+}
+}
+
+$rootScope.styleForAboutItem = function(){
+
+if($scope.themeVar == "Joker"){
+return {
+"background-color": "#9B59B6",
+    "color": "#D7F3D3"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return {
+"background-color": "#526374",
+    "color": "white"
+}
+}
+}
+
+}])
+
+.controller('themesCtrl',['$scope','dictionaryService', function($scope,dictionaryService) {
+    $scope.themeSelected=dictionaryService.getTheme();
+
+$scope.themeClick = function(){
+dictionaryService.setTheme($scope.themeSelected);
+}
+}])
+
+.controller('aboutCtrl',['$scope', function($scope) {
+
+    $scope.openLinkedInURL=function(){
+        window.open("https://in.linkedin.com/in/jitesh-pahalwani-48259a78", '_system');
+    }
+
+    $scope.openGitHubURL=function(){
+        window.open("https://github.com/jitesh-pahalwani/coolDictionaryApp", '_system');
+    }
+
+}])
+
+.controller('historyCtrl',['$scope','$state','dictionaryService', function($scope,$state,dictionaryService) {
     $scope.showSpinner=false;
     $scope.recentSearchesFromDbToBind=[];
 
@@ -47,9 +313,9 @@ $scope.$on('historyItemClick', function(e,data) {
         $state.go('app.search');
         $scope.$emit("historyItemClick", wordFromHistory);
     }
-})
+}])
 
-.controller('searchCtrl', function($scope, $http,$rootScope,$ionicNavBarDelegate,$ionicSideMenuDelegate) {
+.controller('searchCtrl',['$scope','$http','$rootScope','$ionicNavBarDelegate','dictionaryService', function($scope, $http,$rootScope,$ionicNavBarDelegate,dictionaryService) {
     $ionicNavBarDelegate.showBackButton(false);
     $scope.definitionArray = [];
     $scope.adjectiveArray = [];
@@ -57,6 +323,22 @@ $scope.$on('historyItemClick', function(e,data) {
     $scope.synonymArray = [];
     $scope.antonymArray = [];
     $scope.showSpinner=false;
+
+/*    $scope.returnStyleForBackgroundImage = function(){
+  $scope.themeVar = dictionaryService.getTheme();
+
+if($scope.themeVar == "Joker"){
+return $scope.styleObj={
+"background-image": "url(images/joker.jpg)"
+}
+}
+else{
+  $scope.themeVar="Batman";
+ return $scope.styleObj={
+"background-image": "url(images/batman.jpg)"
+}
+}
+}*/
 
     /*Capturing the broadcasted data from parent controller*/
     $rootScope.$on('sendWordToSearch', function(e,data) {
@@ -84,6 +366,7 @@ $scope.$on('historyItemClick', function(e,data) {
             var keyVal = Object.keys(response.data.query.pages);
             if (keyVal == -1) {
                 $scope.errorInSearch = true;
+                $scope.showSpinner=false;
             }
             var longString = response.data.query.pages[keyVal].revisions[0]['*'];
             $scope.extractHeadings(longString);
@@ -197,4 +480,4 @@ $scope.$on('historyItemClick', function(e,data) {
         $scope.showSpinner=false;
     }
 
-});
+}]);

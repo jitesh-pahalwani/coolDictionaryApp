@@ -1,66 +1,72 @@
-<ion-view view-title="Dictionary">
+<ion-view ng-style="returnStyleForBackgroundImage()" view-title="Dark Knight Dictionary">
   <ion-content>
   <ion-spinner ng-show="showSpinner" id="spinnerId" icon="ripple"></ion-spinner>
     <div class="list">
 
-  <div class="item item-input-inset">
+  <div ng-style="styleForInputInset()" class="item item-input-inset">
     <div id="searchBarWrapper" class="item-input-wrapper">
       <input id="searchInputBox" type="text" placeholder="Enter a word here..." ng-model="wordToSearch">
-      <i id="crossIcon" class="icon ion-close-circled" ng-click="wordToSearch=null"></i>
+      <i ng-style="styleForCrossIcon()" id="crossIcon" class="icon ion-close-circled" ng-click="wordToSearch=null"></i>
     </div>
-    <button id="searchButton" class="button button-small" ng-click="searchWord(wordToSearch)">
+    <button ng-style="styleForButton()" id="searchButton" class="button button-small" ng-click="searchWord(wordToSearch)">
       Search
     </button>
   </div>
-<div ng-show="errorInSearch">The word does not exist</div>
-<div ng-show="errorOccurred">An error occurred. Please try again later.</div>
-<div ng-show="noString">Please enter a word.</div>
+<div ng-style="styleForErrorDiv()" ng-show="errorInSearch">The word does not exist</div>
+<div ng-style="styleForErrorDiv()" ng-show="errorOccurred">An error occurred. Please check your internet connection or try again later.</div>
+<div ng-style="styleForErrorDiv()" ng-show="noString">Please enter a word.</div>
 
 <div ng-show="(nounArray.length)>0">
-  <div class="item item-divider">
+  <div ng-style="styleForItemDivider()" class="item item-divider">
     As a Noun
   </div>
-  <div class="padding" ng-repeat="x in nounArray">
+  <div ng-style="styleForSubItem()" class="padding" ng-repeat="x in nounArray">
     {{x}}
   </div>  
 </div>
 
 <div ng-show="(definitionArray.length)>0">
-  <div class="item item-divider">
+  <div ng-style="styleForItemDivider()" class="item item-divider">
     As a Verb
   </div>
-  <div class="padding" ng-repeat="x in definitionArray">
+  <div ng-style="styleForSubItem()" class="padding" ng-repeat="x in definitionArray">
     {{x}}
   </div>  
 </div>
 
 <div ng-show="(adjectiveArray.length)>0">
-  <div class="item item-divider">
+  <div ng-style="styleForItemDivider()" class="item item-divider">
     As an Adjective
   </div>
-  <div class="padding" ng-repeat="x in adjectiveArray">
+  <div ng-style="styleForSubItem()" class="padding" ng-repeat="x in adjectiveArray">
     {{x}}
   </div>  
 </div>
 
 <div ng-show="(synonymArray.length)>0">
-  <div class="item item-divider">
+  <div ng-style="styleForItemDivider()" class="item item-divider">
     Synonyms
   </div>
-  <div class="padding" ng-repeat="x in synonymArray track by $index">
+  <div ng-style="styleForSubItem()" class="padding" ng-repeat="x in synonymArray track by $index">
     {{x}}
   </div>  
 </div>
 
 <div ng-show="(antonymArray.length)>0">
-  <div class="item item-divider">
+  <div ng-style="styleForItemDivider()" class="item item-divider">
     Antonyms
   </div>
-  <div class="padding" ng-repeat="x in antonymArray track by $index">
+  <div ng-style="styleForSubItem()" class="padding" ng-repeat="x in antonymArray track by $index">
     {{x}}
   </div>  
 </div>
 
 </div>
+
   </ion-content>
+  <!--ion-footer-bar align-title="center" ng-style="styleForItemDivider()">Current Theme: {{themeVar}}
+</ion-footer-bar-->
+<div ng-style="styleForItemDivider()" class="bar bar-footer bar-balanced">
+  <div  class="title">Current Theme: {{themeVar}}</div>
+</div>
 </ion-view>

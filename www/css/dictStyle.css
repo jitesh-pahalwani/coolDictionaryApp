@@ -1,12 +1,13 @@
 /* Empty. Add your own CSS if you like */
 #spinnerId{
 	position: absolute;
-	top: 50%;
-	left:40%;
+	top: 40%;
+	left:20%;
 }
 .spinner svg {
-  width: 75px;
-  height: 75px;
+  width: 200px;
+  height: 200px;
+  stroke: darkgrey
 }
 #searchBarWrapper{
     width: 80%
@@ -17,4 +18,13 @@
 #crossIcon{
         padding: 5px;
     font-size: 20px;
+}
+.bar-stable{
+	background-color: black !important;
+}
+.bar.bar-stable .title{
+	color: #BFBFBF;
+}
+.bar-stable .button.button-clear{
+	color: #BFBFBF;
 }
